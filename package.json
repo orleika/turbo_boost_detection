@@ -1,0 +1,27 @@
+{
+  "name": "turbo-boost-detection",
+  "version": "0.1.0",
+  "description": "turbo boost detection",
+  "main": "server.js",
+  "engines": {
+    "node": "~4.1.2",
+    "npm": "~3.3.5"
+  },
+  "scripts": {
+    "test": "exit 0",
+    "start": "node server.js"
+  },
+  "author": "yasuda koki",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "compression": "^1.5.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.1",
+    "helmet": "^0.10.0",
+    "js-yaml": "^3.3.1",
+    "mongoose": "^4.1.10",
+    "morgan": "^1.6.1",
+    "ua-parser-js": "^0.7.9"
+  }
+}
