@@ -28,7 +28,7 @@
     }));
   }
 
-  function send(data) {
+  function create(data) {
     return $.ajax({
       type: 'POST',
       url: 'https://sanderia.gq/api/result',
@@ -36,12 +36,18 @@
     });
   }
 
-  function result(data) {
-    $('#status').text(data).css('font-weight', '700');
+  function update(data) {
+    return $.ajax({
+      type: 'POST',
+      url: 'https://sanderia.gq/api/update',
+      data: data
+    });
   }
 
   var scale = 1000000,
-    thread = 5;
+    thread = 5,
+    startInput = false,
+    startInputTime = 0;
 
   multi(thread, scale, function(multiTime) {
     single(scale, function(singleTime) {
@@ -52,9 +58,31 @@
         thread: thread
       };
       console.log('ratio:', multiTime / singleTime);
-      send(data).then(function() {
-        result('ratio:' + (multiTime / singleTime));
+      create(data).then(function(res) {
+        $('#status').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
+        setInterval(function() {
+          if (startInput && 2000 < Date.now() - startInputTime) {
+            var data = {
+              id: res.id,
+              ratio: res.ratio,
+              name: $('#name').val()
+            };
+            update(data).then(function() {
+              startInput = false;
+              $('#name').css('border-color', '#2BBBAD');
+            });
+          }
+        }, 1000);
       });
     });
   });
+
+  function startInputEvent() {
+    startInput = true;
+    $('#name').css('border-color', '#9E9E9E');
+    startInputTime = Date.now();
+  }
+
+  $('#name').on('keypress', startInputEvent);
+
 }(window, jQuery));
