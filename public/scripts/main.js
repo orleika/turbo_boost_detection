@@ -31,7 +31,7 @@
   function create(data) {
     return $.ajax({
       type: 'POST',
-      url: 'https://sanderia.gq/api/result',
+      url: 'https://sanderia.ga/api/result',
       data: data
     });
   }
@@ -39,7 +39,7 @@
   function update(data) {
     return $.ajax({
       type: 'POST',
-      url: 'https://sanderia.gq/api/update',
+      url: 'https://sanderia.ga/api/update',
       data: data
     });
   }
