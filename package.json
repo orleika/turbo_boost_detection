@@ -14,12 +14,11 @@
   "author": "yasuda koki",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.13.2",
-    "compression": "^1.5.1",
+    "body-parser": "^1.14.1",
+    "compression": "^1.6.0",
     "cors": "^2.7.1",
-    "express": "^4.13.1",
+    "express": "^4.13.3",
     "helmet": "^0.10.0",
-    "js-yaml": "^3.3.1",
     "mongoose": "^4.1.10",
     "morgan": "^1.6.1",
     "ua-parser-js": "^0.7.9"
