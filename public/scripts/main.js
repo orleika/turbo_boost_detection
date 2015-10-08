@@ -40,8 +40,8 @@
     $('#status').text(data).css('font-weight', '700');
   }
 
-  var scale = 10000000,
-    thread = 10;
+  var scale = 1000000,
+    thread = 5;
 
   multi(thread, scale, function(multiTime) {
     single(scale, function(singleTime) {
@@ -51,6 +51,7 @@
         scale: scale,
         thread: thread
       };
+      console.log('ratio:', multiTime / singleTime);
       send(data).then(function() {
         result('ratio:' + (multiTime / singleTime));
       });
