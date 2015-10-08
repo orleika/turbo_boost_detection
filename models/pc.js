@@ -24,6 +24,7 @@ var pcSchema = new Schema({
   scale: Number,
   thread: Number,
   turboBoost: Boolean,
+  userName: String,
   createdAt: {
     type: Date,
     default: Date.now

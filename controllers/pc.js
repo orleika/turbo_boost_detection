@@ -8,7 +8,7 @@ var pc = {
     var PcModel = mongoose.model('pc'),
       ua = parser(req.headers['user-agent']),
       single = parseFloat(req.body.single),
-      multi = parseFloat(req.body.multi ),
+      multi = parseFloat(req.body.multi),
       scale = parseInt(req.body.scale, 10),
       thread = parseInt(req.body.thread, 10);
 
@@ -34,6 +34,29 @@ var pc = {
       return res.json({
         id: pc._id,
         ratio: pc.ratio
+      });
+    });
+  },
+  update: (req, res, next) => {
+    var PcModel = mongoose.model('pc'),
+      id = req.body.id,
+      ratio = parseFloat(req.body.ratio),
+      name = req.body.name;
+
+    PcModel.findById(id, (err, pc) => {
+      if (pc.ratio !== ratio) {
+        return res.status(400).json({
+          id: pc._id
+        });
+      }
+      pc.userName = name;
+      pc.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.json({
+          id: pc._id
+        });
       });
     });
   }
