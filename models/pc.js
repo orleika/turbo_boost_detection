@@ -23,7 +23,11 @@ var pcSchema = new Schema({
   ratio: Number,
   scale: Number,
   thread: Number,
-  turboBoost: Boolean
+  turboBoost: Boolean,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 }, {
   collection: 'pc'
 });
