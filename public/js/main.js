@@ -6,7 +6,7 @@
       callback(window.performance.now() - start);
       worker.terminate();
     }
-    var worker = new Worker('scripts/worker.js');
+    var worker = new Worker('js/worker.js');
     worker.addEventListener('message', recieve, false);
     worker.postMessage(scale);
     var start = window.performance.now();
