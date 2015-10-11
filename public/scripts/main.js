@@ -49,30 +49,32 @@
     startInput = false,
     startInputTime = 0;
 
-  multi(thread, scale, function(multiTime) {
-    single(scale, function(singleTime) {
-      var data = {
-        single: singleTime,
-        multi: multiTime,
-        scale: scale,
-        thread: thread
-      };
-      console.log('ratio:', multiTime / singleTime);
-      create(data).then(function(res) {
-        $('#status').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
-        setInterval(function() {
-          if (startInput && 2000 < Date.now() - startInputTime) {
-            var data = {
-              id: res.id,
-              ratio: res.ratio,
-              name: $('#name').val()
-            };
-            update(data).then(function() {
-              startInput = false;
-              $('#name').css('border-color', '#2BBBAD');
-            });
-          }
-        }, 1000);
+  $(function() {
+    multi(thread, scale, function(multiTime) {
+      single(scale, function(singleTime) {
+        var data = {
+          single: singleTime,
+          multi: multiTime,
+          scale: scale,
+          thread: thread
+        };
+        console.log('ratio:', multiTime / singleTime);
+        create(data).then(function(res) {
+          $('#status').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
+          setInterval(function() {
+            if (startInput && 2000 < Date.now() - startInputTime) {
+              var data = {
+                id: res.id,
+                ratio: res.ratio,
+                name: $('#name').val()
+              };
+              update(data).then(function() {
+                startInput = false;
+                $('#name').css('border-color', '#2BBBAD');
+              });
+            }
+          }, 1000);
+        });
       });
     });
   });
