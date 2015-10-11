@@ -18,11 +18,15 @@ const pcSchema = new Schema({
     name: String,
     version: String
   },
-  single: Number,
-  multi: Number,
+  io: {
+    time: Number,
+    scale: Number
+  },
+  calc: {
+    time: Number,
+    scale: Number
+  },
   ratio: Number,
-  scale: Number,
-  thread: Number,
   turboBoost: Boolean,
   userName: String,
   createdAt: {

@@ -1,29 +1,53 @@
 (function(window, $, undefined) {
   'use strict';
 
-  function single(scale, callback) {
+  function compareNumbers(a, b) {
+    return a - b;
+  }
+
+  function sum(arr) {
+    return arr.reduce(function(a, b) {
+      return a + b;
+    });
+  }
+
+  function average(arr) {
+    return sum(arr) / arr.length;
+  }
+
+  function median(arr, fn) {
+    arr.sort(fn);
+    arr.pop();
+    arr.shift();
+    return average(arr);
+  }
+
+  function single(type, scale, callback) {
     function recieve() {
       callback(window.performance.now() - start);
       worker.terminate();
     }
     var worker = new Worker('js/worker.js');
     worker.addEventListener('message', recieve, false);
-    worker.postMessage(scale);
+    worker.postMessage({
+      type: type,
+      scale: scale
+    });
     var start = window.performance.now();
   }
 
-  function multi(n, scale, callback) {
+  function multi(n, type, scale, callback) {
     var c = 0,
-      totalTime = 0;
+      result = [];
     (function(done) {
       for (var i = 0; i < n; i++) {
-        single(scale / n, done);
+        single(type, scale, done);
       }
     }(function(time) {
       c++;
-      totalTime += time;
+      result.push(time);
       if (c === n) {
-        callback(totalTime);
+        callback(median(result, compareNumbers));
       }
     }));
   }
@@ -45,22 +69,23 @@
   }
 
   $(function() {
-    var scale = 1000000,
-      thread = 5,
+    var ioScale = 100,
+      calcScale = 2000000,
       startInput = false,
       startInputTime = 0;
 
-    multi(thread, scale, function(multiTime) {
-      single(scale, function(singleTime) {
+    multi(5, 'io', ioScale, function(ioTime) {
+      multi(5, 'calc', calcScale, function(calcTime) {
         var data = {
-          single: singleTime,
-          multi: multiTime,
-          scale: scale,
-          thread: thread
+          ioTime: ioTime,
+          ioScale: ioScale,
+          calcTime: calcTime,
+          calcScale: calcScale
         };
-        console.log('ratio:', multiTime / singleTime);
+        console.log(data);
+        console.log('ratio:', ioTime / calcTime);
         create(data).then(function(res) {
-          $('#result').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
+          $('#result').text('ratio: ' + (ioTime / calcTime)).css('font-weight', '700');
           setInterval(function() {
             if (startInput && 1500 < Date.now() - startInputTime && $('#name').val() !== '') {
               var data = {

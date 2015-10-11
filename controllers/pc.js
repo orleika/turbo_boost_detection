@@ -7,10 +7,10 @@ const pc = {
   create: (req, res, next) => {
     const PcModel = mongoose.model('pc'),
       ua = parser(req.headers['user-agent']),
-      single = parseFloat(req.body.single),
-      multi = parseFloat(req.body.multi),
-      scale = parseInt(req.body.scale, 10),
-      thread = parseInt(req.body.thread, 10);
+      ioTime = parseFloat(req.body.ioTime),
+      ioScale = parseInt(req.body.ioScale, 10),
+      calcTime = parseFloat(req.body.calcTime),
+      calcScale = parseInt(req.body.calcScale, 10);
 
     let pcModel = new PcModel({
       ua: ua.ua,
@@ -21,11 +21,15 @@ const pc = {
       },
       engine: ua.engine,
       os: ua.os,
-      single,
-      multi,
-      ratio: multi / single,
-      scale,
-      thread
+      io: {
+        time: ioTime,
+        scale: ioScale
+      },
+      calc: {
+        time: calcTime,
+        scale: calcScale
+      },
+      ratio: ioTime / calcTime
     });
     pcModel.save((err, pc) => {
       if (err) {
