@@ -44,12 +44,12 @@
     });
   }
 
-  var scale = 1000000,
-    thread = 5,
-    startInput = false,
-    startInputTime = 0;
-
   $(function() {
+    var scale = 1000000,
+      thread = 5,
+      startInput = false,
+      startInputTime = 0;
+
     multi(thread, scale, function(multiTime) {
       single(scale, function(singleTime) {
         var data = {
@@ -62,7 +62,7 @@
         create(data).then(function(res) {
           $('#result').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
           setInterval(function() {
-            if (startInput && 2000 < Date.now() - startInputTime && $('#name').val() !== '') {
+            if (startInput && 1500 < Date.now() - startInputTime && $('#name').val() !== '') {
               var data = {
                 id: res.id,
                 ratio: res.ratio,
@@ -72,7 +72,7 @@
                 .done(function() {
                   $('#updateStatus').addClass('has-success');
                   $('#updateStatusIcon').addClass('glyphicon-ok').show();
-                }).catch(function() {
+                }).fail(function() {
                   $('#updateStatus').addClass('has-error');
                   $('#updateStatusIcon').addClass('glyphicon-remove').show();
                 }).always(function() {
@@ -83,15 +83,15 @@
         });
       });
     });
+
+    function startInputEvent() {
+      startInput = true;
+      $('#updateStatus').removeClass('has-success has-error');
+      $('#updateStatusIcon').removeClass('glyphicon-ok glyphicon-remove').hide();
+      startInputTime = Date.now();
+    }
+
+    $('#name').on('keypress', startInputEvent);
   });
-
-  function startInputEvent() {
-    startInput = true;
-    $('#updateStatus').removeClass('has-success has-error');
-    $('#updateStatusIcon').removeClass('glyphicon-ok glyphicon-remove').hidden();
-    startInputTime = Date.now();
-  }
-
-  $('#name').on('keypress', startInputEvent);
 
 }(window, jQuery));
