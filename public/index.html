@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
   <title>Turbo Boost Detection</title>
 </head>
+
 <body>
-  <main>
-    <h3>Turbo Boost Detect</h3>
-    <p id="status">now detecting...</p>
-    <p><label>name: <input id="name" type="text" placeholder="Your Name" style="border-width: medium medium 1px; border-style: none none solid; border-color: #9E9E9E;"></label></p>
+  <main class="container">
+    <h3 class="page-header">Turbo Boost Detect</h3>
+    <p id="result">now detecting...</p>
+    <div class="form-inline">
+      <div id="updateStatus" class="form-group has-feedback">
+        <label class="control-label" for="name">Input your name: </label>
+        <input id="name" type="text" class="form-control" placeholder="Your Name">
+        <span id="updateStatusIcon" class="glyphicon form-control-feedback" style="display: none"></span>
+      </div>
+    </div>
   </main>
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

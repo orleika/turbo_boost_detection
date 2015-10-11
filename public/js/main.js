@@ -60,18 +60,24 @@
         };
         console.log('ratio:', multiTime / singleTime);
         create(data).then(function(res) {
-          $('#status').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
+          $('#result').text('ratio:' + (multiTime / singleTime)).css('font-weight', '700');
           setInterval(function() {
-            if (startInput && 2000 < Date.now() - startInputTime) {
+            if (startInput && 2000 < Date.now() - startInputTime && $('#name').val() !== '') {
               var data = {
                 id: res.id,
                 ratio: res.ratio,
                 name: $('#name').val()
               };
-              update(data).then(function() {
-                startInput = false;
-                $('#name').css('border-color', '#2BBBAD');
-              });
+              update(data)
+                .done(function() {
+                  $('#updateStatus').addClass('has-success');
+                  $('#updateStatusIcon').addClass('glyphicon-ok').show();
+                }).catch(function() {
+                  $('#updateStatus').addClass('has-error');
+                  $('#updateStatusIcon').addClass('glyphicon-remove').show();
+                }).always(function() {
+                  startInput = false;
+                });
             }
           }, 1000);
         });
@@ -81,7 +87,8 @@
 
   function startInputEvent() {
     startInput = true;
-    $('#name').css('border-color', '#9E9E9E');
+    $('#updateStatus').removeClass('has-success has-error');
+    $('#updateStatusIcon').removeClass('glyphicon-ok glyphicon-remove').hidden();
     startInputTime = Date.now();
   }
 
