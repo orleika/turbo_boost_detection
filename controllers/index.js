@@ -1,12 +1,13 @@
 'use strict';
 
-var fs = require('fs'),
-  controllers = {};
+const fs = require('fs');
 
-fs.readdirSync(__dirname + '/').forEach((file) => {
-  if (~file.indexOf('.js') && !~file.indexOf('index')) {
+let controllers = {};
+
+fs.readdirSync(`${__dirname}/`).forEach((file) => {
+  if (file.includes('.js') && !file.includes('index')) {
     let fileName = file.substring(0, file.indexOf('.'));
-    controllers[fileName] = require('./' + fileName);
+    controllers[fileName] = require(`./${fileName}`);
   }
 });
 

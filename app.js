@@ -2,7 +2,7 @@
 
 /* jshint unused: false */
 
-var express = require('express'),
+const express = require('express'),
   app = express(),
   fs = require('fs'),
   logger = require('morgan'),
@@ -15,7 +15,7 @@ var express = require('express'),
 // Use helmet to secure Express headers
 app.use(helmet());
 app.use(cors({
-  origin: process.env.HOST,
+  origin: process.env.HOST || 'localhost',
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
 }));
 
@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(compression());
 
-var connect = () => {
-  var options = {
+const connect = () => {
+  const options = {
     server: {
       socketOptions: {
         keepAlive: 1
@@ -45,9 +45,9 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
-fs.readdirSync(__dirname + '/models').forEach((file) => {
-  if (~file.indexOf('.js')) {
-    require(__dirname + '/models/' + file);
+fs.readdirSync(`${__dirname}/models`).forEach((file) => {
+  if (file.includes('.js')) {
+    require(`${__dirname}/models/${file}`);
   }
 });
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var controllers = require('./controllers'),
+const controllers = require('./controllers'),
   express = require('express'),
   router = express.Router();
 

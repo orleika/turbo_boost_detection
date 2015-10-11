@@ -1,11 +1,11 @@
 'use strict';
 
-var parser = require('ua-parser-js'),
+const parser = require('ua-parser-js'),
   mongoose = require('mongoose');
 
-var pc = {
+const pc = {
   create: (req, res, next) => {
-    var PcModel = mongoose.model('pc'),
+    const PcModel = mongoose.model('pc'),
       ua = parser(req.headers['user-agent']),
       single = parseFloat(req.body.single),
       multi = parseFloat(req.body.multi),
@@ -21,11 +21,11 @@ var pc = {
       },
       engine: ua.engine,
       os: ua.os,
-      single: single,
-      multi: multi,
+      single,
+      multi,
       ratio: multi / single,
-      scale: scale,
-      thread: thread
+      scale,
+      thread
     });
     pcModel.save((err, pc) => {
       if (err) {
@@ -38,7 +38,7 @@ var pc = {
     });
   },
   update: (req, res, next) => {
-    var PcModel = mongoose.model('pc'),
+    const PcModel = mongoose.model('pc'),
       id = req.body.id,
       ratio = parseFloat(req.body.ratio),
       name = req.body.name;
