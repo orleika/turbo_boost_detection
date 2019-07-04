@@ -9,7 +9,9 @@
   },
   "scripts": {
     "test": "exit 0",
-    "start": "node server.js"
+    "start": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "yasuda koki",
   "license": "MIT",
@@ -21,6 +23,8 @@
     "helmet": "^0.10.0",
     "mongoose": "^4.1.10",
     "morgan": "^1.6.1",
-    "ua-parser-js": "^0.7.9"
-  }
+    "ua-parser-js": "^0.7.9",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
