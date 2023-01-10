@@ -19,7 +19,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "helmet": "^0.10.0",
-    "mongoose": "^4.1.10",
+    "mongoose": "^5.2.6",
     "morgan": "^1.6.1",
     "ua-parser-js": "^0.7.9"
   }
